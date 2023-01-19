@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     # Install Apps 
     'authentication.apps.AuthenticationConfig',
+    'event.apps.EventConfig',
 
     # Install Third Party
     'rest_framework',
