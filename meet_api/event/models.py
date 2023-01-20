@@ -1,8 +1,20 @@
+
+import json
+
 from django.contrib.auth import get_user_model
 from django.db import models
 
 # Create your models here.
 User = get_user_model()
+
+class EventOpinion(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='event_opioner')
+    event_post = models.ForeignKey("EventGroup", on_delete=models.CASCADE, related_name='event_post_opnion')
+    opinion = models.CharField(max_length=200, blank=False)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.opinion}"
 
 
 class EventGroup(models.Model):
@@ -13,10 +25,18 @@ class EventGroup(models.Model):
     image = models.ImageField(upload_to='event_thumbline', blank=True, null=True, default='default_file/event_thumbline.jpg')
     details = models.TextField()
     members = models.ManyToManyField(User, related_name='member_of')
+    opinion = models.ManyToManyField(EventOpinion, related_name='event_user_opinion', blank=True)
     deadline = models.DateField()
+    tags = models.CharField(max_length=100)
     create_at = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.title}"
+
+    def set_tags(self, array):
+        self.tags = json.dumps(array)
+    
+    def get_tags(self):
+        return json.loads(self.tags)
 
 
