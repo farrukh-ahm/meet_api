@@ -105,11 +105,11 @@ def actionEvent(request, event_id):
     user = request.user
     qs = EventGroup.objects.filter(_id=event_id)
     if not qs.exists():
-        return Response({"message": "Group Not Exist Or You are not authentic"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"message": "Event Not Exist Or You are not authentic"}, status=status.HTTP_400_BAD_REQUEST)
     event = qs.first()
-    # if user == event.author:
-    #     event.delete()
-    #     return Response({"message": "Event Deleted"}, status=status.HTTP_200_OK)
+    if user == event.author:
+        event.delete()
+        return Response({"message": "Event Deleted"}, status=status.HTTP_200_OK)
 
     today = date.today()
     deadline = event.deadline

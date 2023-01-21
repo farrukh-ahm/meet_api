@@ -30,6 +30,7 @@ class EventGroupSerializer(serializers.ModelSerializer):
     members = serializers.SerializerMethodField(read_only=True)
     opinion_count = serializers.SerializerMethodField(read_only=True)
     members_count = serializers.SerializerMethodField(read_only=True)
+    tags = serializers.SerializerMethodField(read_only=True)
     opinion = EventOpinionSerializer(many=True, read_only=True)
 
     class Meta:
@@ -40,6 +41,12 @@ class EventGroupSerializer(serializers.ModelSerializer):
         serializer = UserSerializer(obj.author, many=False)
         return serializer.data
     
+    def get_tags(self, obj):
+        space_undo = obj.tags.replace(" ", "")
+        tags = list(space_undo.split(","))
+        return tags
+
+
     def get_members_count(self, obj):
         return obj.members.values().count()
 
