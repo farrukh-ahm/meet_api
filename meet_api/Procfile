@@ -1,2 +1,2 @@
-release: python manage.py makemigrations && python manage.py migrate
- web: gunicorn meet_api.meet_api.wsgi
+release: python ./manage.py makemigrations && python ./manage.py migrate
+ web: gunicorn ./meet_api.wsgi
