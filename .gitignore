@@ -2,7 +2,7 @@
 meet_api/.env
 meet_api/.env.backup
 *.pyc
-env
+env.py
 venv
 virtualenv
 .code

@@ -46,7 +46,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
+    'cloudinary',
 
     # Install Apps 
     'authentication.apps.AuthenticationConfig',
@@ -196,13 +198,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+CLOUDINARY_STORAGE = {
+    'CLOUDINARY_URL': os.environ.get('CLOUDINARY_URL'),
+}
+
 STATIC_URL = '/static/'
-MEDIA_URL = '/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-    # BASE_DIR / 'frontend/build/static'
-]
-MEDIA_ROOT = 'static/'
+MEDIA_URL = '/media/'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'static',
+#     # BASE_DIR / 'frontend/build/static'
+# ]
+# MEDIA_ROOT = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
