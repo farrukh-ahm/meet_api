@@ -56,10 +56,10 @@ REST_FRAMEWORK = {
     ),
 }
 
-if 'DEV' not in os.environ:
-    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
-        'rest_framework.renderers.JSONRenderer',
-    ]
+# if 'DEV' not in os.environ:
+#     REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
+#         'rest_framework.renderers.JSONRenderer',
+#     ]
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=10),
@@ -144,7 +144,6 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CORS_ALLOW_CREDENTIALS = True
-
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
