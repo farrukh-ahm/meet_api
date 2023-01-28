@@ -140,8 +140,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://example.com",
     "https://sub.example.com",
     "http://localhost:3000",
-    "https://3000-farrukhahm-letsmeet-7dc4gmcslzx.ws-eu84.gitpod.io/",
-    "https://lets-meet.herokuapp.com/",
+    "https://3000-farrukhahm-letsmeet-7dc4gmcslzx.ws-eu84.gitpod.io",
+    "https://lets-meet.herokuapp.com",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
