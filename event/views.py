@@ -190,8 +190,8 @@ def event_opinion_delete(request, event_id, opinion_id):
     if (user == opinion.user or user.is_superuser == True or user == obj.author):
         remove_opinion = obj.opinion.remove(opinion)
         opinion.delete()
-        return Response({"message": "Opinion Delete Successfully"}, status=status.HTTP_200_OK)
-    return Response({"message": "You are not authorize"}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response({"message": "Opinion Deleted Successfully"}, status=status.HTTP_200_OK)
+    return Response({"message": "You are not authorized"}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 @api_view(['PUT'])
