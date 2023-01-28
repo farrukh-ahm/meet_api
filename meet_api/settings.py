@@ -1,5 +1,6 @@
 from datetime import timedelta
 from pathlib import Path
+import re
 
 from decouple import config
 import os
@@ -16,14 +17,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = config('SECRET_KEY')
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = config('DEBUG', cast=bool)
 DEBUG = 'DEV' in os.environ
 
 
-ALLOWED_HOSTS = ['localhost', 'letsmeet-api.herokuapp.com']
+ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST'), 'localhost',]
 
 
 # Application definition
@@ -99,6 +100,8 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+    
+    'AUTH_COOKIE_SAMESITE': 'None'
 }
 
 SWAGGER_SETTINGS = {
@@ -122,6 +125,14 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+if 'CLIENT_ORIGIN_DEV' in os.environ:
+    extracted_url = re.match(r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE).group(0)
+    CORS_ALLOWED_ORIGIN_REGEXES = [
+        rf"{extracted_url}(eu|us)\d+\w\.gitpod\.io$",
+    ]
+
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'meet_api.urls'
 
@@ -152,11 +163,11 @@ AUTH_USER_MODEL = 'authentication.User'
 #     "https://lets-meet.herokuapp.com",
 # ]
 
-CORS_ALLOW_ALL_ORIGIN = True
+# CORS_ALLOW_ALL_ORIGIN = True
 
 # CORS_ORIGIN_ALL = True
 
-CORS_ALLOW_CREDENTIALS = True
+# CORS_ALLOW_CREDENTIALS = True
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
