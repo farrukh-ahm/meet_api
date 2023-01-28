@@ -136,11 +136,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'meet_api.wsgi.application'
 AUTH_USER_MODEL = 'authentication.User'
 
-CORS_ALLOWED_ORIGINS = True
-
-CORS_ORIGIN_ALL = True
-
-CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
