@@ -144,6 +144,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://lets-meet.herokuapp.com",
 ]
 
+CORS_ORIGIN_ALL = True
+
 CORS_ALLOW_CREDENTIALS = True
 
 # Database
