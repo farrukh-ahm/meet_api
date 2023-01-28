@@ -1,6 +1,6 @@
 .idea
-meet_api/.env
-meet_api/.env.backup
+.env
+.env.backup
 *.pyc
 env.py
 venv
