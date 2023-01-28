@@ -15,6 +15,7 @@ from rest_framework.response import Response
 def intro(request):
     return Response(data={"message": "Hello Event"}, status=status.HTTP_200_OK)
 
+
 @api_view(['GET'])
 def getAllEvent(request):
     events = EventGroup.objects.all()
@@ -23,10 +24,21 @@ def getAllEvent(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def authAllEvent(request):
+    current_user = request.user
+    group_members = EventGroup.objects.all().filter(members__username = current_user.username)
+    all_groups = [group._id for group in group_members]
+    events = EventGroup.objects.exclude(_id__in=all_groups)
+    serializer = EventGroupSerializer(events, many=True)
+    return Response(data=serializer.data, status = status.HTTP_200_OK)
+
+
+@api_view(['GET'])
 def getEvent(request, event_id):
     qs = EventGroup.objects.filter(_id = event_id)
     if not qs.exists():
-        return Response({"message": "Event not exits"}, status=status.HTTP_404_NOT_FOUND)
+        return Response({"message": "Event does not exist"}, status=status.HTTP_404_NOT_FOUND)
     event = qs.first()
     serializer = EventGroupSerializer(event, many=False)
     return Response(data=serializer.data, status = status.HTTP_200_OK)
@@ -40,14 +52,26 @@ def myEvent(request):
     serializer = EventGroupSerializer(group_members, many=True)
     return Response(data=serializer.data, status = status.HTTP_200_OK)
 
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def author_event(request):
+    current_user = request.user
+    author = EventGroup.objects.all().filter(author=current_user)
+    serializer = EventGroupSerializer(author, many=True)
+    return Response(data=serializer.data, status = status.HTTP_200_OK)
+
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def createEvent(request):
     user = request.user
     data = request.data
+    file = request.FILES.get('event_file')
     eventCreate = EventGroup.objects.create(
         author = user,
         title = data['title'],
+        image= file,
         description = data['description'],
         details = data['details'],
         deadline = data['deadline'],
@@ -56,6 +80,7 @@ def createEvent(request):
     eventCreate.members.add(user)
     serializer = EventGroupSerializer(eventCreate)
     return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
@@ -74,12 +99,13 @@ def deleteEvent(request, event_id):
     user = request.user
     qs = EventGroup.objects.filter(_id = event_id)
     if not qs.exists():
-        return Response({"message": "Event not exits"}, status=status.HTTP_404_NOT_FOUND)
+        return Response({"message": "Event does not exit"}, status=status.HTTP_404_NOT_FOUND)
     event = qs.first()
     if (user == event.author or user.is_superuser == True):
         event.delete()
-        return Response({"message": "Event Removed"}, status=status.HTTP_200_OK)
-    return Response({"message": "You are not authorize"}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response({"message": "Event Removed Successfully"}, status=status.HTTP_200_OK)
+    return Response({"message": "You are not authorized"}, status=status.HTTP_401_UNAUTHORIZED)
+
 
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
@@ -87,9 +113,9 @@ def updateEvent(request, event_id):
     user = request.user
     data = request.data
     qs = EventGroup.objects.filter(_id = event_id, author=user)
-    if not qs.exists():
-        return Response({"message": "Event not exits or Your are not authorize"}, status=status.HTTP_404_NOT_FOUND)
     event = qs.first()
+    if not qs.exists():
+        return Response({"message": "Event does not exit or You are not authorized"}, status=status.HTTP_404_NOT_FOUND)
     event.title = data['title'],
     event.description = data['description'],
     event.details = data['details'],
@@ -99,13 +125,14 @@ def updateEvent(request, event_id):
     serializer = EventGroupSerializer(event, many=False)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def actionEvent(request, event_id):
     user = request.user
     qs = EventGroup.objects.filter(_id=event_id)
     if not qs.exists():
-        return Response({"message": "Event Not Exist Or You are not authentic"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"message": "Event Does Not Exist Or You are not authorized"}, status=status.HTTP_400_BAD_REQUEST)
     event = qs.first()
     if user == event.author:
         event.delete()
@@ -117,10 +144,10 @@ def actionEvent(request, event_id):
         members = [member['username'] for member in event.members.values()]
         if user.username not in members:
             event.members.add(user)
-            return Response({"message": "Join is Confirm"}, status=status.HTTP_200_OK)
+            return Response({"message": "You Joined the Meet!"}, status=status.HTTP_200_OK)
         else:
             event.members.remove(user)
-            return Response({"message": "Exit is Confirm"}, status=status.HTTP_200_OK)
+            return Response({"message": "You left the Meet"}, status=status.HTTP_200_OK)
     return Response({"message": "TimeOut"}, status=status.HTTP_204_NO_CONTENT)
 
 
