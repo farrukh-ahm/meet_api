@@ -41,6 +41,7 @@ def update_profile(request):
     user = request.user
     profile = User.objects.get(id = user.id)
     serializer = UserSerializerWithToken(profile, many=False)
+    print(data['first_name'], data['last_name'])
     profile.first_name = data['first_name']
     profile.last_name = data['last_name']
     profile.save()
