@@ -33,11 +33,17 @@ def intro(request):
 @api_view(['POST'])
 def registerUser(request):
     data = request.data
-    serializer = UserSerializerWithToken(data=data, many=False)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(data=serializer.data, status=status.HTTP_201_CREATED)
-    return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    user = User.objects.create(
+        first_name = data['first_name'],
+        last_name = data['last_name'],
+        username = data['username'], 
+        email = data['email'], 
+        phone_number = data['phone_number'],
+        password = make_password(data['password'])
+    )
+    serializer = UserSerializerWithToken(user)
+
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 @api_view(['DELETE'])
