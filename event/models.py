@@ -23,7 +23,7 @@ class EventGroup(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
     title = models.CharField(max_length=255, blank=False, null=False)
     description = models.CharField(max_length=500, blank=False, null=False)
-    image = CloudinaryField('image', default='../event_thumbline_yw77uq')
+    image = models.ImageField(upload_to='images/', default='../event_thumbline_yw77uq')
     details = models.TextField()
     members = models.ManyToManyField(User, related_name='member_of')
     opinion = models.ManyToManyField(EventOpinion, related_name='event_user_opinion', blank=True)
