@@ -16,7 +16,7 @@ class Profile(models.Model):
     profile_pic = models.ImageField(upload_to='images/', default='../sample_vwadx7')
     username=models.CharField(max_length=40,unique=True)
     email=models.CharField(max_length=80,unique=True)
-    phone_number=PhoneNumberField(unique=True, null=False, blank=False)
+    phone_number=models.CharField(max_length=80, unique=True, null=False, blank=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
