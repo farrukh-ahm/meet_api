@@ -169,7 +169,7 @@ def event_opinion_create(request, event_id):
         event_post = obj,
         opinion = data['opinion']
     )
-    obj.opinions.add(opinion_add)
+    obj.opinion.add(opinion_add)
     serializer = EventOpinionSerializer(opinion_add, many=False)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -188,7 +188,7 @@ def event_opinion_delete(request, event_id, opinion_id):
         return Response({"message": "Opinion Not Found"}, status=status.HTTP_404_NOT_FOUND)
     opinion = opinion_qs.first()
     if (user == opinion.user or user.is_superuser == True or user == obj.author):
-        remove_opinion = obj.opinions.remove(opinion)
+        remove_opinion = obj.opinion.remove(opinion)
         opinion.delete()
         return Response({"message": "Opinion Deleted Successfully"}, status=status.HTTP_200_OK)
     return Response({"message": "You are not authorized"}, status=status.HTTP_401_UNAUTHORIZED)
