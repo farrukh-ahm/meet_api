@@ -3,6 +3,7 @@ from account.models import Profile
 from account.serializer import ProfileSerializer
 from authentication.serializers import UserSerializerWithToken
 from django.contrib.auth import get_user_model
+from django.contrib.auth.hashers import make_password
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAdminUser, IsAuthenticated

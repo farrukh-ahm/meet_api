@@ -26,7 +26,7 @@ class EventGroup(models.Model):
     image = models.ImageField(upload_to='images/', default='../event_thumbline_yw77uq')
     details = models.TextField()
     members = models.ManyToManyField(User, related_name='member_of')
-    opinion = models.ManyToManyField(EventOpinion, related_name='event_user_opinion', blank=True)
+    opinions = models.ManyToManyField(EventOpinion, related_name='event_user_opinion', blank=True)
     deadline = models.DateField()
     tags = models.CharField(max_length=100)
     create_at = models.DateField(auto_now_add=True)
