@@ -16,5 +16,7 @@ urlpatterns = [
     path('create/', views.createEvent, name="create_event"),
     path('all/', views.getAllEvent, name="all_event"),
     path('mine/', views.myEvent, name="my_event"),
+    path('auth_all/', views.authAllEvent, name="author_all_event"),
+    path('author/', views.authorEvent, name="author_event"),
     path('eventfile-upload', views.uploadEventFile, name="upload-event-photo"),
 ]
