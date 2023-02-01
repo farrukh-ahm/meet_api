@@ -88,6 +88,6 @@ class EventGroupSerializer(serializers.ModelSerializer):
         return serializer.data
 
     def get_opinion_count(self, obj):
-        return obj.opinion.count()
+        return obj.opinions.count()
     
 
