@@ -55,7 +55,7 @@ def myEvent(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def author_event(request):
+def authorevent(request):
     current_user = request.user
     author = EventGroup.objects.all().filter(author=current_user)
     serializer = EventGroupSerializer(author, many=True)
