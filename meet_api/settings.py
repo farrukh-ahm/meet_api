@@ -126,13 +126,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# if 'CLIENT_ORIGIN_DEV' in os.environ:
-#     extracted_url = re.match(r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE).group(0)
-#     CORS_ALLOWED_ORIGIN_REGEXES = [
-#         rf"{extracted_url}(eu|us)\d+\w\.gitpod\.io$",
-#     ]
+if 'CLIENT_ORIGIN_DEV' in os.environ:
+    extracted_url = re.match(r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE).group(0)
+    CORS_ALLOWED_ORIGIN_REGEXES = [
+        rf"{extracted_url}(eu|us)\d+\w\.gitpod\.io$",
+    ]
 
-# CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'meet_api.urls'
 
@@ -155,19 +155,19 @@ TEMPLATES = [
 WSGI_APPLICATION = 'meet_api.wsgi.application'
 AUTH_USER_MODEL = 'authentication.User'
 
-CORS_ALLOWED_ORIGINS = [
-    "https://example.com",
-    "https://sub.example.com",
-    "http://localhost:3000",
-    "https://3000-farrukhahm-letsmeet-7dc4gmcslzx.ws-eu84.gitpod.io",
-    "https://lets-meet.herokuapp.com",
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "https://example.com",
+#     "https://sub.example.com",
+#     "http://localhost:3000",
+#     "https://3000-farrukhahm-letsmeet-7dc4gmcslzx.ws-eu84.gitpod.io",
+#     "https://lets-meet.herokuapp.com",
+# ]
 
 # CORS_ALLOW_ALL_ORIGIN = True
 
 # CORS_ORIGIN_ALL = True
 
-CORS_ALLOW_CREDENTIALS = True
+# CORS_ALLOW_CREDENTIALS = True
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
