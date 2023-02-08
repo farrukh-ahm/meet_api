@@ -14,6 +14,9 @@ class EventOpinion(models.Model):
     opinion = models.CharField(max_length=200, blank=False)
     date_created = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['-date_created']
+
     def __str__(self):
         return f"{self.opinion}"
 
@@ -30,6 +33,9 @@ class EventGroup(models.Model):
     deadline = models.DateField()
     tags = models.CharField(max_length=100)
     create_at = models.DateField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-create_at']
 
     def __str__(self):
         return f"{self.title}"
