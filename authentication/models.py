@@ -4,7 +4,8 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
-# Create your models here.
+# Creting Custom User Models more convenience of our app
+
 class CustomUserManager(BaseUserManager):
     def create_user(self,email,password,**extra_fields):
         if not email:

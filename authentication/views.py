@@ -9,12 +9,15 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-# Create your views here.
+
 User = get_user_model()
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
+        """
+        Token authentication
+        """
         data = super().validate(attrs)
         serializer = UserSerializerWithToken(self.user).data
         for key, value in serializer.items():
@@ -33,6 +36,9 @@ def intro(request):
 
 @api_view(['POST'])
 def registerUser(request):
+    """
+    User Registration
+    """
     data = request.data
     user = User.objects.create(
         first_name = data['first_name'],
@@ -50,6 +56,9 @@ def registerUser(request):
 @api_view(['DELETE'])
 @permission_classes([IsAdminUser])
 def deleteUser(request, pk):
+    """
+    Deleting a User
+    """
     userForDeletion = User.objects.get(id=pk)
     userForDeletion.delete()
     return Response('User was deleted')

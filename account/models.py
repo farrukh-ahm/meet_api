@@ -23,6 +23,9 @@ class Profile(models.Model):
     def __str__(self):
         return f"{self.full_name}'s Profile"
 
+
+# Auto creating the profile upon signup
+
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
     if created:

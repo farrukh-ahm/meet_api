@@ -18,6 +18,9 @@ def intro(request):
 
 @api_view(['GET'])
 def getAllEvent(request):
+    """
+    Fetch all the events
+    """
     events = EventGroup.objects.all()
     serializer = EventGroupSerializer(events, many=True)
     return Response(data=serializer.data, status = status.HTTP_200_OK)
@@ -26,6 +29,9 @@ def getAllEvent(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def authAllEvent(request):
+    """
+    Authenticating the user for the event actions
+    """
     current_user = request.user
     group_members = EventGroup.objects.all().filter(members__username = current_user.username)
     all_groups = [group._id for group in group_members]
@@ -36,6 +42,9 @@ def authAllEvent(request):
 
 @api_view(['GET'])
 def getEvent(request, event_id):
+    """
+    Fetch particular event
+    """
     qs = EventGroup.objects.filter(_id = event_id)
     if not qs.exists():
         return Response({"message": "Event does not exist"}, status=status.HTTP_404_NOT_FOUND)
@@ -47,6 +56,9 @@ def getEvent(request, event_id):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def myEvent(request):
+    """
+    Fetch user created events
+    """
     current_user = request.user
     group_members = EventGroup.objects.all().filter(members__username = current_user.username)
     serializer = EventGroupSerializer(group_members, many=True)
@@ -56,6 +68,9 @@ def myEvent(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def authorEvent(request):
+    """
+    Fetch event author
+    """
     current_user = request.user
     author = EventGroup.objects.all().filter(author=current_user)
     serializer = EventGroupSerializer(author, many=True)
@@ -65,6 +80,9 @@ def authorEvent(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def createEvent(request):
+    """
+    Handle event creation
+    """
     user = request.user
     data = request.data
     file = request.FILES.get('event_file')
@@ -129,6 +147,9 @@ def updateEvent(request, event_id):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def actionEvent(request, event_id):
+    """
+    Handles all the actions taken on an event
+    """
     user = request.user
     qs = EventGroup.objects.filter(_id=event_id)
     if not qs.exists():
@@ -158,6 +179,9 @@ def actionEvent(request, event_id):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def event_opinion_create(request, event_id):
+    """
+    Create an opinion
+    """
     qs = EventGroup.objects.filter(_id= event_id)
     if not qs.exists():
         return Response({"message": "Event Not Found"}, status=status.HTTP_404_NOT_FOUND)
@@ -177,6 +201,9 @@ def event_opinion_create(request, event_id):
 @api_view(['Delete'])
 @permission_classes([IsAuthenticated])
 def event_opinion_delete(request, event_id, opinion_id):
+    """
+    Deleting an opinion
+    """
     qs = EventGroup.objects.filter(_id= event_id)
     if not qs.exists():
         return Response({"message": "Event Not Found"}, status=status.HTTP_404_NOT_FOUND)
@@ -197,6 +224,9 @@ def event_opinion_delete(request, event_id, opinion_id):
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def event_opinion_update(request, event_id, opinion_id):
+    """
+    Updating the opinion
+    """
     qs = EventGroup.objects.filter(_id= event_id)
     if not qs.exists():
         return Response({"message": "Event Not Found"}, status=status.HTTP_404_NOT_FOUND)

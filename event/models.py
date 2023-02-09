@@ -5,9 +5,10 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from cloudinary.models import CloudinaryField
 
-# Create your models here.
+
 User = get_user_model()
 
+# Creating Opinions
 class EventOpinion(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='event_opioner')
     event_post = models.ForeignKey("EventGroup", on_delete=models.CASCADE, related_name='event_post_opnion')
@@ -21,6 +22,7 @@ class EventOpinion(models.Model):
         return f"{self.opinion}"
 
 
+#Creating Events
 class EventGroup(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, db_constraint=False, related_name='event_of',  blank=False, null=False)
     _id = models.AutoField(primary_key=True, editable=False)

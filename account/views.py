@@ -44,6 +44,9 @@ def get_profile_username(request, username ,*args, **kwargs):
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def update_profile(request):
+    """
+    Updating the user's profile
+    """
     data = request.data
     user = request.user
     profile = User.objects.get(id = user.id)
@@ -58,6 +61,9 @@ def update_profile(request):
 @api_view(['GET'])
 @permission_classes([IsAdminUser])
 def get_allprofile(request):
+    """
+    Fetch list of all profiles
+    """
     profile = Profile.objects.all()
     serializer = ProfileSerializer(profile, many=True)
     return Response(serializer.data)
@@ -66,6 +72,9 @@ def get_allprofile(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def uploadProfileImage(request):
+    """
+    Profile pic update handler
+    """
     data = request.data
     profile = Profile.objects.get(user=request.user)
     profile.profile_pic = request.FILES.get('profile_image')

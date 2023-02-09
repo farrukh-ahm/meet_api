@@ -19,6 +19,9 @@ class ProfileSerializer(serializers.ModelSerializer):
         return event_member.count()
         
     def get_group_event(self, obj):
+        """
+        Get all the events joined by the user
+        """
         event_member = EventGroup.objects.all().filter(members__username=obj.username)
         serializer = EventGroupSerializer(event_member, many=True)
         return serializer.data
