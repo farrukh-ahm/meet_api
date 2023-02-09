@@ -21,6 +21,9 @@ def intro(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_profile(request):
+    """
+    Get a user's profile details
+    """
     user = request.user
     profile = Profile.objects.filter(user=user)
     serializer = ProfileSerializer(profile, many=True)
@@ -29,6 +32,9 @@ def get_profile(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_profile_username(request, username ,*args, **kwargs):
+    """
+    Extract the username
+    """
     user = request.user
     profile = Profile.objects.filter(username=username)
     obj = profile.first()

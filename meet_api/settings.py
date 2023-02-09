@@ -12,15 +12,11 @@ if os.path.exists('env.py'):
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = config('SECRET_KEY')
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = config('DEBUG', cast=bool)
 DEBUG = 'DEV' in os.environ
 
 
@@ -157,22 +153,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'meet_api.wsgi.application'
 AUTH_USER_MODEL = 'authentication.User'
 
-# CORS_ALLOWED_ORIGINS = [
-#     "https://example.com",
-#     "https://sub.example.com",
-#     "http://localhost:3000",
-#     "https://3000-farrukhahm-letsmeet-7dc4gmcslzx.ws-eu85.gitpod.io",
-#     "https://lets-meet.herokuapp.com",
-# ]
 
-# CORS_ALLOW_ALL_ORIGIN = True
-
-# CORS_ORIGIN_ALL = True
-
-# CORS_ALLOW_CREDENTIALS = True
-
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 if 'DEV' in os.environ:
     DATABASES = {
@@ -186,13 +167,6 @@ else:
         'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
     }
 
-# DATABASES = {
-#         'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
-#     }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -210,9 +184,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -222,19 +193,7 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
-
 
 
 STATIC_URL = '/static/'
-# STATICFILES_DIRS = [
-#     BASE_DIR / 'static',
-#     # BASE_DIR / 'frontend/build/static'
-# ]
-# MEDIA_ROOT = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
