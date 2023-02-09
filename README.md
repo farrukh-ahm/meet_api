@@ -5,6 +5,13 @@
 "Lets Meet" is a website designed to help people find their interest groups and meet new people! The website can be used by anyone planning an event, a trip, a hike, or anything and find people sharing their interests, and either join them or invite them to be a part of your own group.
 This part of the project is the Backend for our app. This API is built upon Django-REST framework, for data handling of our ReactJS front-end.
 
+## Table of Content
+- [User Stories](#stories)
+ - [Testing](#testing)
+ - [Deployment](#deployment)
+ - [Technologies and Libraries Used](#tech)
+ - [Acknowledgements and Credits](#credits)
+
 # User Story <a name="stories"></a>
 - As a User, I can easily signup/register to the website so that I can browse the website freely.
 - As a User, I can easily login, so that I can access the features of the website exclusive to logged in users.
@@ -39,7 +46,7 @@ This part of the project is the Backend for our app. This API is built upon Djan
 ![Database Schema](./static/read-pic/meets_sql.JPG)
 
 
-# Testing
+# Testing <a name="testing"></a>
 
 ## Manual Testing
 1. The coding was done on VS Code environment. There were some issues with pusing the code to the GitHub after initial few pushes. 
@@ -71,7 +78,7 @@ Python passed through PEP8 test with no issues. As the online PEP8 website is do
   No bugs were found as of writing of this document. Any bug found during the development and deployment of the project was worked on and removed.
 
 
-# Deployment
+# Deployment <a name="deployment"></a>
 ## Project Creation
 1. Create GitHub repository
 1. Create project app on [Heroku](https://dashboard.heroku.com/)
@@ -253,7 +260,7 @@ python3 manage.py migrate
 1. Navigated back to heroku, and under the ‘Deploy’ tab, connect the GitHub repository.
 1. Deployed the branch
 
-# Technologies Used
+# Technologies Used <a name="tech"></a>
 
 ## Language Used:
 - Python
@@ -270,7 +277,7 @@ python3 manage.py migrate
 - DrawSQL
 ![Requirements](./static/read-pic/requirements.JPG)
 
-# Acknowledgements and Credits
+# Acknowledgements and Credits <a name="credits"></a>
 - The project was heavily relied on Youtube Tutorials and Udemy course, as the course content provided was improperly executed and not easy to understand.
 - Huge thanks to the CodeInstitute Tutors for their valuable help and support.
 - Great appreciation for my mentor Martina Terlevic, for her constant support.
